@@ -21,30 +21,30 @@ public class Main {
 
         Board board = new Board(size);
         System.out.println(Arrays.deepToString(board.getBoard()));
-            board.getBoard();
+        board.getBoard();
 
 
 
-        System.out.println("Enter first player name: ");
-        String name = scanner.nextLine();
-        Player player_1 = new Player(1, name);
 
-        System.out.println("Enter second player name: ");
-        name = scanner.nextLine();
-        Player player_2 = new Player(2, name);
+//        System.out.println("Enter first player name: ");
+//        String name = scanner.nextLine();
+//        Player player_1 = new Player(1, name);
+//
+//        System.out.println("Enter second player name: ");
+//        name = scanner.nextLine();
+//        Player player_2 = new Player(2, name);
+//
+//        Player playerInGame = player_1;
 
-        Player playerInGame = player_1;
-
-        boolean gameOn = true;
-
-        board.fillBoardWithPawns(player_1, player_2);
-
-        while (gameOn) {
-            // TODO: GET COORDINATES FROM PLAYER
-            System.out.println("Please provide coordinates in format (a1 b2): ");
-            // TODO: isValidFormat, isInBounds, coordinatesInterpreter
-            break;
-        }
+//        boolean gameOn = true;
+//
+//
+//        while (gameOn) {
+//            // TODO: GET COORDINATES FROM PLAYER
+//            System.out.println("Please provide coordinates in format (a1 b2): ");
+//            // TODO: isValidFormat, isInBounds, coordinatesInterpreter
+//            break;
+//        }
     }
 
 

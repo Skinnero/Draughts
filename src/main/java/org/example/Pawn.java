@@ -2,17 +2,26 @@ package org.example;
 
 public class Pawn {
 
-    int[] coordinates;
+    private int[] coordinates;
 
-    Player player;
+    private final Player player;
 
-    boolean isCrowned = false;
+    private boolean isCrowned = false;
 
     public Pawn(int[] coordinates, Player player) {
         this.coordinates = coordinates;
         this.player = player;
     }
-    // TODO: Setter to isCrowned, coordinates| ValidMovement, getPawn, ValidAttack
+
+    public boolean isValidMovement(int[] designedCoordinates) {
+        return Math.abs(coordinates[0] - designedCoordinates[0]) == 1 &&
+        Math.abs(coordinates[1] - designedCoordinates[1]) == 1;
+    }
+
+    public boolean isValidAttack(int[] designedCoordinates) {
+        return Math.abs(coordinates[0] - designedCoordinates[0]) != 2 &&
+                Math.abs(coordinates[1] - designedCoordinates[1]) != 2;
+    }
 
     public int[] getCoordinates() {
         return coordinates;
@@ -20,5 +29,17 @@ public class Pawn {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void setCoordinates(int[] coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setCrowned(boolean crowned) {
+        isCrowned = crowned;
+    }
+
+    public boolean isCrowned() {
+        return isCrowned;
     }
 }

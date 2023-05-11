@@ -1,6 +1,8 @@
 package org.example;
 
 
+import java.util.Objects;
+
 public class Board {
     private Pawn[][] boardField;
     private int boardSize;
@@ -18,33 +20,37 @@ public class Board {
         return boardSize;
     }
 
-    // EMOJIS
-    // NUMBERS: "1\uFE0F⃣ 2\uFE0F⃣ 3\uFE0F⃣ 4\uFE0F⃣ 5\uFE0F⃣ 6\uFE0F⃣ 7\uFE0F⃣ 8\uFE0F⃣ 9\uFE0F⃣ \uD83D\uDD1F" +
-    //            " 1\uFE0F⃣ 2\uFE0F⃣ 3\uFE0F⃣ 4\uFE0F⃣ 5\uFE0F⃣ 6\uFE0F⃣ 7\uFE0F⃣ 8\uFE0F⃣ 9\uFE0F⃣ \uD83D\uDD1F"
-    // WHITE SQUARE: ⬜
-    // BLACK SQUARE: 🔳
-    // RED SQUARE: 🟥
-    // BLUE SQUARE: 🟦
-    //
-    // TODO: FILL BOARD WITH PAWNS
-    // TODO: PRINT OUT BOARD
+    public boolean isLegalMove(Pawn pawn, int[] designedCoordinates) {
+        int pawnCounter = 0;
+        int vectorX = designedCoordinates[0] - pawn.getCoordinates()[0];
+        int vectorY = designedCoordinates[1] - pawn.getCoordinates()[1];
 
-    public void fillBoardWithPawns(Player player1, Player player2) {
+        vectorX = vectorX < 0 ? -1 : 1;
+        vectorY = vectorY < 0 ? -1 : 1;
 
-//        boardField[1][2] = new Pawn({1,2}, player1) {
-//        }
-//        boardField[1][2] = null;
-//        boardField[3][4] = new Pawn({x,y}, player2) {
-//        }
-//
-//        boardField[1][2].getPlayer().getName();
+        while (pawn.getCoordinates()[0] + vectorX != designedCoordinates[0] &&
+                pawn.getCoordinates()[1] + vectorY != designedCoordinates[1]) {
+
+            if (!Objects.isNull(boardField[pawn.getCoordinates()[0] + vectorX][pawn.getCoordinates()[1] + vectorY])) {
+                if (boardField[pawn.getCoordinates()[0] + vectorX][pawn.getCoordinates()[1] + vectorY].getPlayer()
+                        .getId() == pawn.getPlayer().getId()) {
+                    return false;
+                }
+                pawnCounter++;
+            }
+
+            if (pawnCounter == 2) {
+                return false;
+            }
+
+            vectorX = vectorX < 0 ? vectorX - 1 : vectorX + 1;
+            vectorY = vectorY < 0 ? vectorY - 1 : vectorY + 1;
+        }
+        return true;
     }
 
-//    public void printBoard() {
-//        for (int i = 0; i < boardSize; i++) {
-//            System.out.println(boardField[i][i]);
-//        }
-//    }
-//
-// boardFields[1][2]
+    public boolean isDesignedCoordinatesOccupied(int[] designedCoordinates) {
+        return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
+    }
+
 }
