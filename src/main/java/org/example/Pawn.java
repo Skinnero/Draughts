@@ -13,14 +13,18 @@ public class Pawn {
         this.player = player;
     }
 
-    public boolean isValidMovement(int[] designedCoordinates) {
+    public boolean isValidMovementForPawn(int[] designedCoordinates) {
         return Math.abs(coordinates[0] - designedCoordinates[0]) == 1 &&
         Math.abs(coordinates[1] - designedCoordinates[1]) == 1;
     }
 
-    public boolean isValidAttack(int[] designedCoordinates) {
+    public boolean isValidAttackForPawn(int[] designedCoordinates) {
         return Math.abs(coordinates[0] - designedCoordinates[0]) != 2 &&
                 Math.abs(coordinates[1] - designedCoordinates[1]) != 2;
+    }
+
+    public boolean isValidMoveForCrownedPawn(int[] designedCoordinates) {
+        return Math.abs(coordinates[0] - designedCoordinates[0]) == Math.abs(coordinates[1] - designedCoordinates[1]);
     }
 
     public int[] getCoordinates() {

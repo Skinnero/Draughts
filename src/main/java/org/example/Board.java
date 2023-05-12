@@ -20,6 +20,9 @@ public class Board {
         return boardSize;
     }
 
+    public boolean isOccupied(int[] designedCoordinates) {
+        return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
+    }
     public boolean isLegalMove(Pawn pawn, int[] designedCoordinates) {
         int pawnCounter = 0;
         int vectorX = designedCoordinates[0] - pawn.getCoordinates()[0];
