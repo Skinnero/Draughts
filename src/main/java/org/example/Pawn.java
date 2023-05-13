@@ -19,8 +19,8 @@ public class Pawn {
     }
 
     public boolean isValidAttackForPawn(int[] designedCoordinates) {
-        return Math.abs(coordinates[0] - designedCoordinates[0]) != 2 &&
-                Math.abs(coordinates[1] - designedCoordinates[1]) != 2;
+        return Math.abs(coordinates[0] - designedCoordinates[0]) == 2 &&
+                Math.abs(coordinates[1] - designedCoordinates[1]) == 2;
     }
 
     public boolean isValidMoveForCrownedPawn(int[] designedCoordinates) {

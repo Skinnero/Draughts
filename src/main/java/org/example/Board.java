@@ -1,6 +1,8 @@
 package org.example;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Board {
@@ -19,12 +21,12 @@ public class Board {
     public int getBoardSize() {
         return boardSize;
     }
-
+    // TODO: (KACPER) movePawn(), removePawn()
     public boolean isOccupied(int[] designedCoordinates) {
         return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
     }
-    public boolean isLegalMove(Pawn pawn, int[] designedCoordinates) {
-        int pawnCounter = 0;
+    public List<Pawn> isLegalMove(Pawn pawn, int[] designedCoordinates) {
+        List<Pawn> attackedPawns = new ArrayList<>();
         int vectorX = designedCoordinates[0] - pawn.getCoordinates()[0];
         int vectorY = designedCoordinates[1] - pawn.getCoordinates()[1];
 
@@ -34,22 +36,24 @@ public class Board {
         while (pawn.getCoordinates()[0] + vectorX != designedCoordinates[0] &&
                 pawn.getCoordinates()[1] + vectorY != designedCoordinates[1]) {
 
-            if (!Objects.isNull(boardField[pawn.getCoordinates()[0] + vectorX][pawn.getCoordinates()[1] + vectorY])) {
-                if (boardField[pawn.getCoordinates()[0] + vectorX][pawn.getCoordinates()[1] + vectorY].getPlayer()
+            int[] inBetweenCoordinates = {pawn.getCoordinates()[0] + vectorX, pawn.getCoordinates()[1] + vectorY};
+
+            if (isOccupied(inBetweenCoordinates)) {
+                if (boardField[inBetweenCoordinates[0]][inBetweenCoordinates[1]].getPlayer()
                         .getId() == pawn.getPlayer().getId()) {
-                    return false;
+                    return attackedPawns;
                 }
-                pawnCounter++;
+                attackedPawns.add(boardField[inBetweenCoordinates[0]][inBetweenCoordinates[1]]);
             }
 
-            if (pawnCounter == 2) {
-                return false;
+            if (attackedPawns.size() == 2) {
+                return attackedPawns;
             }
 
             vectorX = vectorX < 0 ? vectorX - 1 : vectorX + 1;
             vectorY = vectorY < 0 ? vectorY - 1 : vectorY + 1;
         }
-        return true;
+        return attackedPawns;
     }
     public Pawn getPawn(int[] pawnCoordinates, Player player) {
         try {

@@ -1,73 +1,74 @@
 package org.example;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String greeting = "Welcome into Polish Draughts!";
-        System.out.println(greeting);
-        int size = 0;
-
-    while (true) {
+        System.out.println("Welcome into Polish Draughts!");
+        int boardSize;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please choose board size: ");
-        try {
-            size = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Provide valid number");
-            continue;
-        }
 
-        if (10 < size && size < 20) {
-            break;
-        } else {
-            System.out.println("Wrong board size, choose size between 10 and 20");
+        while (true) {
+            System.out.print("Please choose board size: ");
+            try {
+                boardSize = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Provide valid number!");
+                continue;
+            }
+
+            if (10 <= boardSize && boardSize <= 20) {
+                break;
+            } else {
+                System.out.println("Wrong board size, choose size between 10 and 20");
+            }
         }
-    }
-        Board board = new Board(size);
+        Board board = new Board(boardSize);
         System.out.println(Arrays.deepToString(board.getBoard()));
-        board.getBoard();
+        // board.fillBoardWithPawns()
 
+        System.out.print("Enter first player name: ");
+        String name = scanner.nextLine();
+        Player player_1 = new Player(1, name, boardSize * 2, "\u001B[31m");
 
+        System.out.print("Enter second player name: ");
+        name = scanner.nextLine();
+        Player player_2 = new Player(2, name, boardSize * 2, "\u001B[34m");
 
-
-//        System.out.println("Enter first player name: ");
-//        String name = scanner.nextLine();
-//        Player player_1 = new Player(1, name);
-//
-//        System.out.println("Enter second player name: ");
-//        name = scanner.nextLine();
-//        Player player_2 = new Player(2, name);
-//
-//        Player playerInGame = player_1;
+        Player playerInGame = player_1;
 
         boolean gameOn = true;
 
 
         while (gameOn) {
+            // TODO: Change comments to english
             //ponieranie koordynat
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter coordinates. For example a3-b4 or c1-e3-c5");
-            String coordinatesString = (scanner.nextLine());
+            System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
+            // board.printBoard()
+            System.out.println("Enter coordinates. For example: (a3 b4) or (c1 e3 c5)");
+            String coordinatesString = scanner.nextLine();
+            // TODO: Change this into function
             try {
                 // splitowanie
-                String[] coordinatesPreParts = coordinatesString.split("-");
-                ArrayList<String> coordinates = new ArrayList<>();
-                for (String part : coordinatesPreParts) {
-                    coordinates.add(part);
-                }
+                String[] coordinatesPreParts = coordinatesString.split(" ");
+                ArrayList<String> coordinates = new ArrayList<>(Arrays.asList(coordinatesPreParts));
                 // translator
                 int[][] transformedCoordinates = translateCoordinates(coordinates);
                 System.out.println(Arrays.deepToString(transformedCoordinates));
 
+
             } catch (Exception e) {
                 System.out.println("Invalid coordinates");
             }
-            System.out.println("Please provide coordinates in format (a1 b2): ");
+            //
+
+            //playerInGame = playerInGame == player_1 ? player_2 : player_1;
             break;
         }
     }
+
     public static int[][] translateCoordinates(ArrayList<String> coordinates) {
         //translator
         int[][] result = new int[coordinates.size()][2];
@@ -84,12 +85,7 @@ public class Main {
 
     public boolean isInBounds(int[] coordinates, int size) {
         // sprwadzenie czy koorddynaty są w planszy
-            if (coordinates[0] >= size && coordinates[1] >= size) {
-                return true;
-            }
-            return false;
-
-
+        return coordinates[0] >= size && coordinates[1] >= size;
     }
 
 }
