@@ -9,7 +9,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         System.out.print(" Please choose board size: ");
-        int size = Integer.parseInt(scanner.nextLine());
+        int size = Integer.parseInt(scanner.nextLine()); //next int i try catch
 
         if (10 < size && size < 20) {
             Board board = new Board(size);
