@@ -6,9 +6,17 @@ public class Player {
 
     private String name;
 
-    public Player(int id, String name) {
+    private int score;
+
+    private final String color;
+
+
+    public Player(int id, String name, int score, String color) {
         this.id = id;
         this.name = name;
+        this.score = score;
+        this.color = color;
+
     }
 
     public int getId() {

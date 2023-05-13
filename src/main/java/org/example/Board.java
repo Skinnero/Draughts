@@ -51,6 +51,16 @@ public class Board {
         }
         return true;
     }
+    public Pawn getPawn(int[] pawnCoordinates, Player player) {
+        try {
+            if (boardField[pawnCoordinates[0]][pawnCoordinates[1]].getPlayer().getId() == player.getId()) {
+                return boardField[pawnCoordinates[0]][pawnCoordinates[1]];
+            }
+            return null;
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
 
     public boolean isDesignedCoordinatesOccupied(int[] designedCoordinates) {
         return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
