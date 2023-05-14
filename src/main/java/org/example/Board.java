@@ -56,6 +56,8 @@ public class Board {
         return attackedPawns;
     }
     public Pawn getPawn(int[] pawnCoordinates, Player player) {
+        System.out.println(pawnCoordinates);
+        System.out.println(player);
         try {
             if (boardField[pawnCoordinates[0]][pawnCoordinates[1]].getPlayer().getId() == player.getId()) {
                 return boardField[pawnCoordinates[0]][pawnCoordinates[1]];
