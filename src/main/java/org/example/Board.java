@@ -75,5 +75,27 @@ public class Board {
         boardField[designedCoordinates[0]][designedCoordinates[1]] = null;
     }
 
+    public void fillBoardWithPawns(Board board,Player player1, Player player2) {
+        int displacement = 0;
+        for (int i = board.getBoardSize()-1; i > board.getBoardSize()/2; i--) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
+                if (((j + displacement) % 2)  == 1) {
+                    board.getBoard()[i][j] = new Pawn(new int[]{i, j}, player1);
+                } else {
+                    board.getBoard()[i][j] = null;
+                }
+            }
+            displacement ++;
 
+        }
+        displacement = 0;
+        for (int i = 0; i < (board.getBoardSize()/2)-1; i++) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
+                if (((j + displacement) % 2)  == 0) {
+                    board.getBoard()[i][j] = new Pawn(new int[]{i, j}, player2);
+                }
+            }
+            displacement ++;
+        }
+    }
 }
