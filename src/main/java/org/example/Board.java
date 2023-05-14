@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Board {
+    public int length;
     private Pawn[][] boardField;
     private int boardSize;
 
@@ -70,4 +71,27 @@ public class Board {
         return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
     }
 
+    public void fillBoardWithPawns(Board board,Player player1, Player player2) {
+        int shift = 0;
+        for (int i = board.getBoardSize()-1; i > board.getBoardSize()/2; i--) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
+                if (((j + shift) % 2)  == 1) {
+                    board.getBoard()[i][j] = new Pawn(new int[]{i, j}, player1);
+                } else {
+                    board.getBoard()[i][j] = null;
+                }
+            }
+            shift ++;
+
+        }
+        shift = 0;
+        for (int i = 0; i < (board.getBoardSize()/2)-1; i++) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
+                if (((j + shift) % 2)  == 0) {
+                    board.getBoard()[i][j] = new Pawn(new int[]{i, j}, player2);
+                }
+            }
+            shift ++;
+        }
+    }
 }
