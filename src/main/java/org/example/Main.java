@@ -29,15 +29,15 @@ public class Main {
         System.out.println(Arrays.deepToString(board.getBoard()));
         // board.fillBoardWithPawns()
 
-        System.out.print("Enter first player name: ");
-        String name = scanner.nextLine();
-        Player player_1 = new Player(1, name, boardSize * 2, "\u001B[31m");
-
-        System.out.print("Enter second player name: ");
-        name = scanner.nextLine();
-        Player player_2 = new Player(2, name, boardSize * 2, "\u001B[34m");
-
-        Player playerInGame = player_1;
+//        System.out.print("Enter first player name: ");
+//        String name = scanner.nextLine();
+//        Player player_1 = new Player(1, name, boardSize * 2, "\u001B[31m");
+//
+//        System.out.print("Enter second player name: ");
+//        name = scanner.nextLine();
+//        Player player_2 = new Player(2, name, boardSize * 2, "\u001B[34m");
+//
+//        Player playerInGame = player_1;
 
         boolean gameOn = true;
 
@@ -45,7 +45,7 @@ public class Main {
         while (gameOn) {
             // TODO: Change comments to english
             //ponieranie koordynat
-            System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
+//            System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
             // board.printBoard()
             System.out.println("Enter coordinates. For example: (a3 b4) or (c1 e3 c5)");
             String coordinatesString = scanner.nextLine();

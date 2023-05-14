@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Board {
-    private Pawn[][] boardField;
-    private int boardSize;
+    private final Pawn[][] boardField;
+    private final int boardSize;
 
     public Board(int boardSize) {
         this.boardSize = boardSize;
@@ -66,8 +66,14 @@ public class Board {
         }
     }
 
-    public boolean isDesignedCoordinatesOccupied(int[] designedCoordinates) {
-        return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
+    public void movePawn(Pawn pawn, int[] designedCoordinates) {
+        boardField[pawn.getCoordinates()[0]][pawn.getCoordinates()[1]] = null;
+        boardField[designedCoordinates[0]][designedCoordinates[1]] = pawn;
     }
+
+    public void removePawn(int[] designedCoordinates) {
+        boardField[designedCoordinates[0]][designedCoordinates[1]] = null;
+    }
+
 
 }
