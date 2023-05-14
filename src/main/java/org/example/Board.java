@@ -21,7 +21,7 @@ public class Board {
     public int getBoardSize() {
         return boardSize;
     }
-    // TODO: (KACPER) movePawn(), removePawn()
+
     public boolean isOccupied(int[] designedCoordinates) {
         return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
     }

@@ -79,27 +79,25 @@ public class Main {
     }
 
     public static void printBoard(Board board) {
-        // WHITE SQUARE: ⬜
-        // BLACK SQUARE: 🔳
-        // RED SQUARE: 🟥
-        // BLUE SQUARE: 🟦
         System.out.print("  ");
-        for (int i = 1; i <= board.getBoardSize(); i++) {
-            System.out.print(i + "  ");
-        }
-        System.out.println("");
-        char[] alphabet = new char[26];
+        String [] numbers = BoardData.NUMBERS.getValue().split(" ");
         for (int i = 0; i < board.getBoardSize(); i++) {
-            System.out.print((char) ('a' + i));
+            System.out.print(numbers[i]);
+        }
+        System.out.println();
+        //TODO: upper cases
+        String [] alphabet = BoardData.ALPHABET.getValue().split("");
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            System.out.print(alphabet[i]+ " ");
             for (int j = 0; j < board.getBoardSize(); j++) {
                 if (board.getBoard()[i][j] == null && ((i+j)%2)==1) {
-                    System.out.print("\uD83D\uDD33 ");
+                    System.out.print("\uD83D\uDD33");
                 } else if (board.getBoard()[i][j] == null && ((i+j)%2)==0) {
-                    System.out.print("⬜ ");
+                    System.out.print("⬜");
                 }else if (board.getBoard()[i][j].getPlayer().getId() == 1) {
-                    System.out.print("🟦 ");
+                    System.out.print("🟦");
                 }else  {
-                    System.out.print("\uD83D\uDFE5 ");
+                    System.out.print("\uD83D\uDFE5");
                 }
             }
             System.out.println();
