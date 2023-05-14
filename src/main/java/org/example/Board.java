@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Board {
-    public int length;
     private Pawn[][] boardField;
     private int boardSize;
 
