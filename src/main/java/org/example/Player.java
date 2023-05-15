@@ -2,9 +2,9 @@ package org.example;
 
 public class Player {
 
-    private int id;
+    private final int id;
 
-    private String name;
+    private final String name;
 
     private int score;
 
@@ -29,5 +29,9 @@ public class Player {
 
     public String getColor() {
         return color;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

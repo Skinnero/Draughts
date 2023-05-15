@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Board {
-    private Pawn[][] boardField;
-    private int boardSize;
+    private final Pawn[][] boardField;
+    private final int boardSize;
 
     public Board(int boardSize) {
         this.boardSize = boardSize;
@@ -21,7 +21,7 @@ public class Board {
     public int getBoardSize() {
         return boardSize;
     }
-    // TODO: (KACPER) movePawn(), removePawn()
+
     public boolean isOccupied(int[] designedCoordinates) {
         return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
     }
@@ -56,6 +56,8 @@ public class Board {
         return attackedPawns;
     }
     public Pawn getPawn(int[] pawnCoordinates, Player player) {
+        System.out.println(pawnCoordinates);
+        System.out.println(player);
         try {
             if (boardField[pawnCoordinates[0]][pawnCoordinates[1]].getPlayer().getId() == player.getId()) {
                 return boardField[pawnCoordinates[0]][pawnCoordinates[1]];
@@ -66,8 +68,13 @@ public class Board {
         }
     }
 
-    public boolean isDesignedCoordinatesOccupied(int[] designedCoordinates) {
-        return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
+    public void movePawn(Pawn pawn, int[] designedCoordinates) {
+        boardField[pawn.getCoordinates()[0]][pawn.getCoordinates()[1]] = null;
+        boardField[designedCoordinates[0]][designedCoordinates[1]] = pawn;
+    }
+
+    public void removePawn(int[] designedCoordinates) {
+        boardField[designedCoordinates[0]][designedCoordinates[1]] = null;
     }
 
     public void fillBoardWithPawns(Board board,Player player1, Player player2) {
@@ -91,6 +98,31 @@ public class Board {
                 }
             }
             displacement ++;
+        }
+    }
+    public static void printBoard(Board board) {
+        //TODO: move to board
+        System.out.print("  ");
+        String[] numbers = BoardData.NUMBERS.getValue().split(" ");
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            System.out.print(numbers[i]);
+        }
+        System.out.println();
+        //TODO: upper cases
+        String[] alphabet = BoardData.ALPHABET.getValue().split("");
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            System.out.print(alphabet[i] + " ");
+            for (int j = 0; j < board.getBoardSize(); j++) {
+                if (board.getBoard()[i][j] == null && ((i + j) % 2) == 1) {
+                    System.out.print("\uD83D\uDD33");
+                } else if (board.getBoard()[i][j] == null && ((i + j) % 2) == 0) {
+                    System.out.print("⬜");
+                } else if (board.getBoard()[i][j].getPlayer().getId() == 1) {
+                    System.out.print("🟦");
+                } else {
+                    System.out.print("\uD83D\uDFE5");
+                }
+            }
         }
     }
 }
