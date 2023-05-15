@@ -123,6 +123,7 @@ public class Board {
                     System.out.print("\uD83D\uDFE5");
                 }
             }
+            System.out.println();
         }
     }
 }

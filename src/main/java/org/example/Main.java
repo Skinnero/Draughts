@@ -42,7 +42,7 @@ public class Main {
 
         while (gameOn) {
             System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
-            printBoard(board);
+            Board.printBoard(board);
             System.out.println("Enter coordinates. For example: (a3 b4) or (c1 e3 c5)");
             String coordinatesString = scanner.nextLine();
             int[][] transformedCoordinates = transformCoordinates(coordinatesString);
@@ -105,31 +105,6 @@ public class Main {
                 }
             }
             return false;
-        }
-
-        public static void printBoard (Board board){
-            System.out.print("  ");
-            String[] numbers = BoardData.NUMBERS.getValue().split(" ");
-            for (int i = 0; i < board.getBoardSize(); i++) {
-                System.out.print(numbers[i]);
-            }
-            System.out.println();
-            String[] alphabet = BoardData.ALPHABET.getValue().split("");
-            for (int i = 0; i < board.getBoardSize(); i++) {
-                System.out.print(alphabet[i] + " ");
-                for (int j = 0; j < board.getBoardSize(); j++) {
-                    if (board.getBoard()[i][j] == null && ((i + j) % 2) == 1) {
-                        System.out.print("\uD83D\uDD33");
-                    } else if (board.getBoard()[i][j] == null && ((i + j) % 2) == 0) {
-                        System.out.print("⬜");
-                    } else if (board.getBoard()[i][j].getPlayer().getId() == 1) {
-                        System.out.print("🟦");
-                    } else {
-                        System.out.print("\uD83D\uDFE5");
-                    }
-                }
-                System.out.println();
-            }
         }
 
         public static int[][] transformCoordinates (String coordinatesString){
