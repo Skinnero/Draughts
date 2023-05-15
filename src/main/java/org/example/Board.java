@@ -25,10 +25,16 @@ public class Board {
     public boolean isOccupied(int[] designedCoordinates) {
         return !Objects.isNull(boardField[designedCoordinates[0]][designedCoordinates[1]]);
     }
+
     public List<Pawn> isLegalMove(Pawn pawn, int[] designedCoordinates) {
+        // TODO: (KACPER) CHECK EDGE CASES
         List<Pawn> attackedPawns = new ArrayList<>();
         int vectorX = designedCoordinates[0] - pawn.getCoordinates()[0];
         int vectorY = designedCoordinates[1] - pawn.getCoordinates()[1];
+
+        if (isOccupied(designedCoordinates)) {
+            return attackedPawns;
+        }
 
         vectorX = vectorX < 0 ? -1 : 1;
         vectorY = vectorY < 0 ? -1 : 1;
@@ -55,8 +61,8 @@ public class Board {
         }
         return attackedPawns;
     }
+
     public Pawn getPawn(int[] pawnCoordinates, Player player) {
-        System.out.println(pawnCoordinates);
         System.out.println(player);
         try {
             if (boardField[pawnCoordinates[0]][pawnCoordinates[1]].getPlayer().getId() == player.getId()) {
@@ -74,41 +80,43 @@ public class Board {
     }
 
     public void removePawn(int[] designedCoordinates) {
+        Player oppositePlayer = boardField[designedCoordinates[0]][designedCoordinates[1]].getPlayer();
         boardField[designedCoordinates[0]][designedCoordinates[1]] = null;
+        oppositePlayer.setScore(oppositePlayer.getScore() - 1);
     }
 
-    public void fillBoardWithPawns(Board board,Player player1, Player player2) {
+    public void fillBoardWithPawns(Board board, Player player1, Player player2) {
         int displacement = 0;
-        for (int i = board.getBoardSize()-1; i > board.getBoardSize()/2; i--) {
+        for (int i = board.getBoardSize() - 1; i > board.getBoardSize() / 2; i--) {
             for (int j = 0; j < board.getBoardSize(); j++) {
-                if (((j + displacement) % 2)  == 1) {
+                if (((j + displacement) % 2) == 1) {
                     board.getBoard()[i][j] = new Pawn(new int[]{i, j}, player1);
                 } else {
                     board.getBoard()[i][j] = null;
                 }
             }
-            displacement ++;
+            displacement++;
 
         }
         displacement = 0;
-        for (int i = 0; i < (board.getBoardSize()/2)-1; i++) {
+        for (int i = 0; i < (board.getBoardSize() / 2) - 1; i++) {
             for (int j = 0; j < board.getBoardSize(); j++) {
-                if (((j + displacement) % 2)  == 0) {
+                if (((j + displacement) % 2) == 0) {
                     board.getBoard()[i][j] = new Pawn(new int[]{i, j}, player2);
                 }
             }
-            displacement ++;
+            displacement++;
         }
     }
+
     public static void printBoard(Board board) {
-        //TODO: move to board
+        // TODO: (DOMINIK) INDICATOR FOR CROWNED PAWNS
         System.out.print("  ");
         String[] numbers = BoardData.NUMBERS.getValue().split(" ");
         for (int i = 0; i < board.getBoardSize(); i++) {
             System.out.print(numbers[i]);
         }
         System.out.println();
-        //TODO: upper cases
         String[] alphabet = BoardData.ALPHABET.getValue().split("");
         for (int i = 0; i < board.getBoardSize(); i++) {
             System.out.print(alphabet[i] + " ");
@@ -126,4 +134,5 @@ public class Board {
             System.out.println();
         }
     }
+    // TODO: (DOMINIK) CROWNING PAWNS
 }

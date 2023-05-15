@@ -41,29 +41,34 @@ public class Main {
 
 
         while (gameOn) {
+            // TODO: (KACPER) MULTIPLE COORDINATES HANDLING
             System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
             Board.printBoard(board);
             System.out.println("Enter coordinates. For example: (a3 b4) or (c1 e3 c5)");
             String coordinatesString = scanner.nextLine();
             int[][] transformedCoordinates = transformCoordinates(coordinatesString);
-            System.out.println(Arrays.deepToString(transformedCoordinates));
+
+
             if (isInBounds(transformedCoordinates, boardSize)) {
-                System.out.print("break");
                 continue;
             }
 
-//            if (!isInBounds(transformedCoordinates, boardSize)) {
-//                continue;
-//            }
-
             Pawn pickedPawn = board.getPawn(transformedCoordinates[0], playerInGame);
-//            System.out.println(Arrays.deepToString(board.getBoard()));
             if (Objects.isNull(pickedPawn)){
                 continue;
             }
+
             if (pickedPawn.isCrowned()) {
                 if (pickedPawn.isValidMoveForCrownedPawn(transformedCoordinates[1])) {
                     List<Pawn> attackedPawns = board.isLegalMove(pickedPawn, transformedCoordinates[1]);
+                    if (attackedPawns.size() == 1) {
+                        board.movePawn(pickedPawn, transformedCoordinates[1]);
+                        board.removePawn(attackedPawns.get(0).getCoordinates());
+                        pickedPawn.setCoordinates(transformedCoordinates[1]);
+                    } else if (attackedPawns.size() == 0) {
+                        board.movePawn(pickedPawn, transformedCoordinates[1]);
+                        pickedPawn.setCoordinates(transformedCoordinates[1]);
+                    }
                 } else {
                     continue;
                 }

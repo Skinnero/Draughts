@@ -16,11 +16,16 @@ public class Player {
         this.name = name;
         this.score = score;
         this.color = color;
-
     }
+
+    // TODO: (DOMINIK) IS GAME WON FUNCTION
 
     public int getId() {
         return id;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public String getName() {
