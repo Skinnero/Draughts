@@ -80,12 +80,13 @@ public class Main {
     }
 
     public static void printBoard(Board board) {
+        //TODO: move to board
         System.out.print("  ");
         String [] numbers = BoardData.NUMBERS.getValue().split(" ");
         for (int i = 0; i < board.getBoardSize(); i++) {
             System.out.print(numbers[i]);
         }
-        System.out.println("");
+        System.out.println();
         //TODO: upper cases
         String [] alphabet = BoardData.ALPHABET.getValue().split("");
         for (int i = 0; i < board.getBoardSize(); i++) {
