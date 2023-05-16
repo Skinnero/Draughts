@@ -39,4 +39,11 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public boolean playerWinCondition (Player player) {
+        if (player.getScore() == 0) {
+            return true;
+        }
+        return false;
+    }
 }

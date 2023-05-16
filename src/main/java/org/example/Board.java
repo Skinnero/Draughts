@@ -134,5 +134,16 @@ public class Board {
             System.out.println();
         }
     }
-    // TODO: (DOMINIK) CROWNING PAWNS
+    public static void crownPawn(Pawn pawn, Player player,int size) {
+        if(player.getId() == 1) {
+            if (pawn.getCoordinates()[0] == 0) {
+                pawn.setCrowned(true);
+            }
+        } else if (player.getId() == 2) {
+            if (pawn.getCoordinates()[0] == size) {
+                pawn.setCrowned(true);
+            }
+        }
+
+    }
 }
