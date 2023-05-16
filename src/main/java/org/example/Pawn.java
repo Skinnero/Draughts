@@ -12,10 +12,13 @@ public class Pawn {
         this.coordinates = coordinates;
         this.player = player;
     }
-    // TODO: (KACPER) VALIDATION FOR MOVEMENT WHERE IS GOING BACK
     public boolean isValidMovementForPawn(int[] designedCoordinates) {
-        return Math.abs(coordinates[0] - designedCoordinates[0]) == 1 &&
-        Math.abs(coordinates[1] - designedCoordinates[1]) == 1;
+        if (player.getId() == 1) {
+            return coordinates[0] - designedCoordinates[0] == 1 &&
+                    Math.abs(coordinates[1] - designedCoordinates[1]) == 1;
+        }
+        return coordinates[0] - designedCoordinates[0] == -1 &&
+                Math.abs(coordinates[1] - designedCoordinates[1]) == 1;
     }
 
     public boolean isValidAttackForPawn(int[] designedCoordinates) {
