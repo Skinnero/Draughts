@@ -34,15 +34,13 @@ public class Main {
         Player player_2 = new Player(2, name, boardSize * 2, "\u001B[31m");
 
         Player playerInGame = player_1;
-
         board.fillBoardWithPawns(board, player_1, player_2);
-
         boolean gameOn = true;
 
-
         while (gameOn) {
+            // TODO: REFACTORING
             System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
-            Board.printBoard(board);
+            board.printBoard(board);
             System.out.println("Enter coordinates. For example: (a3 b4) or (c1 e3 c5)");
             String coordinatesString = scanner.nextLine();
             List<int[]> transformedCoordinates = transformCoordinates(coordinatesString);
@@ -56,7 +54,7 @@ public class Main {
             if (Objects.isNull(pickedPawn)) {
                 continue;
             }
-            // TODO: REPEAT AFTER WRONG COORDINATES
+            // TODO: (KACPER) REPEAT AFTER WRONG COORDINATES
             do {
                 if (pickedPawn.isCrowned()) {
                     if (pickedPawn.isValidMoveForCrownedPawn(transformedCoordinates.get(1)) &&
@@ -87,8 +85,14 @@ public class Main {
                 transformedCoordinates.remove(1);
             } while (transformedCoordinates.size() >= 2);
 
+            if (player_1.isPlayerWin() || player_2.isPlayerWin()) {
+                gameOn = false;
+            }
+
+            board.crownPawn(pickedPawn);
             playerInGame = playerInGame == player_1 ? player_2 : player_1;
         }
+        System.out.println("GAME OVER!");
     }
 
     public static List<int[]> translateCoordinates(ArrayList<String> coordinates) {

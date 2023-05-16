@@ -63,7 +63,6 @@ public class Board {
     }
 
     public Pawn getPawn(int[] pawnCoordinates, Player player) {
-        System.out.println(player);
         try {
             if (boardField[pawnCoordinates[0]][pawnCoordinates[1]].getPlayer().getId() == player.getId()) {
                 return boardField[pawnCoordinates[0]][pawnCoordinates[1]];
@@ -109,8 +108,8 @@ public class Board {
         }
     }
 
-    public static void printBoard(Board board) {
-        // TODO: (DOMINIK) INDICATOR FOR CROWNED PAWNS
+    public void printBoard(Board board) {
+        // TODO: (DOMINIK) INDICATOR FOR CROWNED PAWNS + REFACTORING
         System.out.print("  ");
         String[] numbers = BoardData.NUMBERS.getValue().split(" ");
         for (int i = 0; i < board.getBoardSize(); i++) {
@@ -134,16 +133,16 @@ public class Board {
             System.out.println();
         }
     }
-    public static void crownPawn(Pawn pawn, Player player,int size) {
-        if(player.getId() == 1) {
+
+    public void crownPawn(Pawn pawn) {
+        if (pawn.getPlayer().getId() == 1) {
             if (pawn.getCoordinates()[0] == 0) {
                 pawn.setCrowned(true);
             }
-        } else if (player.getId() == 2) {
-            if (pawn.getCoordinates()[0] == size) {
+        } else if (pawn.getPlayer().getId() == 2) {
+            if (pawn.getCoordinates()[0] == boardSize - 1) {
                 pawn.setCrowned(true);
             }
         }
-
     }
 }

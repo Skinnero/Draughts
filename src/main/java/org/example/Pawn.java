@@ -12,6 +12,7 @@ public class Pawn {
         this.coordinates = coordinates;
         this.player = player;
     }
+
     public boolean isValidMovementForPawn(int[] designedCoordinates) {
         if (player.getId() == 1) {
             return coordinates[0] - designedCoordinates[0] == 1 &&

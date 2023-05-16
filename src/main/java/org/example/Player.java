@@ -10,15 +10,12 @@ public class Player {
 
     private final String color;
 
-
     public Player(int id, String name, int score, String color) {
         this.id = id;
         this.name = name;
         this.score = score;
         this.color = color;
     }
-
-    // TODO: (DOMINIK) IS GAME WON FUNCTION
 
     public int getId() {
         return id;
@@ -40,10 +37,7 @@ public class Player {
         this.score = score;
     }
 
-    public boolean playerWinCondition (Player player) {
-        if (player.getScore() == 0) {
-            return true;
-        }
-        return false;
+    public boolean isPlayerWin() {
+        return score == 0;
     }
 }
