@@ -39,6 +39,7 @@ public class Main {
 
         while (gameOn) {
             // TODO: REFACTORING
+            // TODO: In another function
             System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
             board.printBoard(board);
             System.out.println("Enter coordinates. For example: (a3 b4) or (c1 e3 c5)");
