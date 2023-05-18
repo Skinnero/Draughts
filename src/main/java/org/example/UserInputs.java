@@ -14,7 +14,7 @@ public class UserInputs {
     }
 
     public int chooseSize() {
-        int boardSize = 0;
+        int boardSize;
         while (true) {
             System.out.print("Please choose board size: ");
             try {
@@ -44,6 +44,7 @@ public class UserInputs {
             return transformedCoordinates;
         }
     }
+
     public List<int[]> translateCoordinates(ArrayList<String> coordinates) {
         //translating
         List<int[]> result = new ArrayList<>();
@@ -57,8 +58,8 @@ public class UserInputs {
     }
 
     public List<int[]> transformCoordinates(String coordinatesString) {
+        // split coordinates
         try {
-            // split coordinates
             String[] coordinatesPreParts = coordinatesString.split(" ");
             ArrayList<String> coordinates = new ArrayList<>(Arrays.asList(coordinatesPreParts));
             return translateCoordinates(coordinates);
@@ -66,6 +67,7 @@ public class UserInputs {
         } catch (StringIndexOutOfBoundsException ignored) {}
         return new ArrayList<>();
     }
+
     public boolean isInBounds(List<int[]> coordinates, int size) {
         // checking are coordinates in board
         for (int[] coordinate : coordinates) {
