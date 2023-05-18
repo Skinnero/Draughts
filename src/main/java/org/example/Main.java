@@ -7,22 +7,8 @@ public class Main {
         System.out.println("Welcome into Polish Draughts!");
         int boardSize;
         Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Please choose board size: ");
-            try {
-                boardSize = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Provide valid number!");
-                continue;
-            }
-
-            if (10 <= boardSize && boardSize <= 20) {
-                break;
-            } else {
-                System.out.println("Wrong board size, choose size between 10 and 20");
-            }
-        }
+        UserInputs userInputs = new UserInputs();
+        boardSize = userInputs.chooseSize();
         Board board = new Board(boardSize);
 
         System.out.print("Enter first player name: ");
@@ -40,16 +26,10 @@ public class Main {
         while (gameOn) {
             // TODO: REFACTORING
             // TODO: In another function
-            System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
             board.printBoard(board);
-            System.out.println("Enter coordinates. For example: (a3 b4) or (c1 e3 c5)");
-            String coordinatesString = scanner.nextLine();
-            List<int[]> transformedCoordinates = transformCoordinates(coordinatesString);
-
-
-            if (isInBounds(transformedCoordinates, boardSize)) {
-                continue;
-            }
+            System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
+            userInputs = new UserInputs();
+            List<int[]> transformedCoordinates = userInputs.getCoordinates(playerInGame, boardSize);
 
             Pawn pickedPawn = board.getPawn(transformedCoordinates.get(0), playerInGame);
             if (Objects.isNull(pickedPawn)) {
@@ -94,41 +74,5 @@ public class Main {
             playerInGame = playerInGame == player_1 ? player_2 : player_1;
         }
         System.out.println("GAME OVER!");
-    }
-
-    public static List<int[]> translateCoordinates(ArrayList<String> coordinates) {
-        //translating
-        List<int[]> result = new ArrayList<>();
-        for (int i = 0; i < coordinates.size(); i++) {
-            String coordinate = coordinates.get(i);
-            String letter = coordinate.substring(0, 1);
-            int[] transformedCoordinates = new int[]{letter.toLowerCase().charAt(0) - 'a',
-                    Integer.parseInt(coordinate.substring(1)) - 1};
-            result.add(transformedCoordinates);
-        }
-        return result;
-    }
-
-    public static boolean isInBounds(List<int[]> coordinates, int size) {
-        // checking are coordinates in board
-        for (int[] coordinate : coordinates) {
-            if (coordinate[1] > size - 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static List<int[]> transformCoordinates(String coordinatesString) {
-        try {
-            // split coordinates
-            String[] coordinatesPreParts = coordinatesString.split(" ");
-            ArrayList<String> coordinates = new ArrayList<>(Arrays.asList(coordinatesPreParts));
-            return translateCoordinates(coordinates);
-
-        } catch (Exception e) {
-            System.out.println("Invalid coordinates");
-        }
-        return new ArrayList<>();
     }
 }
