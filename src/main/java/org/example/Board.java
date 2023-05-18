@@ -109,7 +109,6 @@ public class Board {
     }
 
     public void printBoard(Board board) {
-        // TODO: (DOMINIK) INDICATOR FOR CROWNED PAWNS + REFACTORING
         System.out.print("  ");
         String[] numbers = BoardData.NUMBERS.getValue().split(" ");
         for (int i = 0; i < board.getBoardSize(); i++) {
@@ -125,9 +124,18 @@ public class Board {
                 } else if (board.getBoard()[i][j] == null && ((i + j) % 2) == 0) {
                     System.out.print("⬜");
                 } else if (board.getBoard()[i][j].getPlayer().getId() == 1) {
+                    if(board.getBoard()[i][j].isCrowned()){
+                        System.out.print("\uD83D\uDD37");
+                    } else {
                     System.out.print("🟦");
+                    }
                 } else {
+                    if(board.getBoard()[i][j].isCrowned()){
+                        System.out.print("\uD83D\uDD3A");
+                    } else {
                     System.out.print("\uD83D\uDFE5");
+                    }
+
                 }
             }
             System.out.println();

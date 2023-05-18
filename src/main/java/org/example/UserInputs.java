@@ -37,7 +37,7 @@ public class UserInputs {
             System.out.println("Enter coordinates. For example: (a3 b4) or (c1 e3 c5)");
             String coordinatesString = scanner.nextLine();
             List<int[]> transformedCoordinates = transformCoordinates(coordinatesString);
-            if (isInBounds(transformedCoordinates, boardSize) == true) {
+            if (isInBounds(transformedCoordinates, boardSize)) {
                 continue;
             } else {
                 return transformedCoordinates;
