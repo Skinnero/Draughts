@@ -39,7 +39,7 @@ public class Main {
 
         while (gameOn) {
             // TODO: REFACTORING
-            System.out.println("Now is moving: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
+            System.out.println("Now is moving player: " + playerInGame.getColor() + playerInGame.getName() + "\u001B[0m");
             board.printBoard(board);
             System.out.println("Enter coordinates. For example: (a3 b4) or (c1 e3 c5)");
             String coordinatesString = scanner.nextLine();
@@ -47,43 +47,55 @@ public class Main {
 
 
             if (isInBounds(transformedCoordinates, boardSize)) {
+                System.out.println("Coordinates out of bounds!");
                 continue;
             }
 
             Pawn pickedPawn = board.getPawn(transformedCoordinates.get(0), playerInGame);
             if (Objects.isNull(pickedPawn)) {
+                System.out.println("You picked wrong pawn!");
                 continue;
             }
-            // TODO: (KACPER) REPEAT AFTER WRONG COORDINATES
+
+            boolean isCoordinatesInvalid = false;
             do {
-                if (pickedPawn.isCrowned()) {
-                    if (pickedPawn.isValidMoveForCrownedPawn(transformedCoordinates.get(1)) &&
-                            !board.isOccupied(transformedCoordinates.get(1))) {
-                        List<Pawn> attackedPawns = board.isLegalMove(pickedPawn, transformedCoordinates.get(1));
-                        if (attackedPawns.size() == 1) {
-                            board.movePawn(pickedPawn, transformedCoordinates.get(1));
-                            board.removePawn(attackedPawns.get(0).getCoordinates());
-                            pickedPawn.setCoordinates(transformedCoordinates.get(1));
-                        } else if (attackedPawns.size() == 0) {
-                            board.movePawn(pickedPawn, transformedCoordinates.get(1));
-                            pickedPawn.setCoordinates(transformedCoordinates.get(1));
-                        }
-                    }
-                } else {
-                    if (pickedPawn.isValidMovementForPawn(transformedCoordinates.get(1)) &&
-                            !board.isOccupied(transformedCoordinates.get(1))) {
-                        board.movePawn(pickedPawn, transformedCoordinates.get(1));
-                        pickedPawn.setCoordinates(transformedCoordinates.get(1));
-                    } else if (pickedPawn.isValidAttackForPawn(transformedCoordinates.get(1)) &&
-                            !board.isOccupied(transformedCoordinates.get(1))) {
-                        List<Pawn> attackedPawns = board.isLegalMove(pickedPawn, transformedCoordinates.get(1));
+                if (transformedCoordinates.size() >= 2 &&
+                        pickedPawn.isValidMovementForPawn(transformedCoordinates.get(1))) {
+                    board.movePawn(pickedPawn, transformedCoordinates.get(1));
+                    pickedPawn.setCoordinates(transformedCoordinates.get(1));
+                    break;
+                }
+                List<Pawn> attackedPawns = board.isLegalMove(pickedPawn, transformedCoordinates.get(1));
+                if (pickedPawn.isValidMoveForCrownedPawn(transformedCoordinates.get(1)) &&
+                        !board.isOccupied(transformedCoordinates.get(1)) &&
+                        pickedPawn.isCrowned()) {
+                    if (attackedPawns.size() == 1) {
                         board.movePawn(pickedPawn, transformedCoordinates.get(1));
                         board.removePawn(attackedPawns.get(0).getCoordinates());
                         pickedPawn.setCoordinates(transformedCoordinates.get(1));
+                    } else if (attackedPawns.size() == 0) {
+                        board.movePawn(pickedPawn, transformedCoordinates.get(1));
+                        pickedPawn.setCoordinates(transformedCoordinates.get(1));
+                    } else {
+                        isCoordinatesInvalid = true;
+                        break;
                     }
+                } else if (pickedPawn.isValidAttackForPawn(transformedCoordinates.get(1)) &&
+                        !board.isOccupied(transformedCoordinates.get(1))) {
+                    board.movePawn(pickedPawn, transformedCoordinates.get(1));
+                    board.removePawn(attackedPawns.get(0).getCoordinates());
+                    pickedPawn.setCoordinates(transformedCoordinates.get(1));
+                } else {
+                    isCoordinatesInvalid = true;
+                    break;
                 }
                 transformedCoordinates.remove(1);
             } while (transformedCoordinates.size() >= 2);
+
+            if (isCoordinatesInvalid) {
+                System.out.println("You have provided invalid coordinates!");
+                continue;
+            }
 
             if (player_1.isPlayerWin() || player_2.isPlayerWin()) {
                 gameOn = false;
@@ -98,11 +110,10 @@ public class Main {
     public static List<int[]> translateCoordinates(ArrayList<String> coordinates) {
         //translating
         List<int[]> result = new ArrayList<>();
-        for (int i = 0; i < coordinates.size(); i++) {
-            String coordinate = coordinates.get(i);
+        for (String coordinate : coordinates) {
             String letter = coordinate.substring(0, 1);
             int[] transformedCoordinates = new int[]{letter.toLowerCase().charAt(0) - 'a',
-                    Integer.parseInt(coordinate.substring(1)) - 1};
+                    Character.getNumericValue(coordinate.charAt(1))};
             result.add(transformedCoordinates);
         }
         return result;
@@ -111,7 +122,7 @@ public class Main {
     public static boolean isInBounds(List<int[]> coordinates, int size) {
         // checking are coordinates in board
         for (int[] coordinate : coordinates) {
-            if (coordinate[1] > size - 1) {
+            if (coordinate[1] >= size || coordinate[0] >= size)  {
                 return true;
             }
         }

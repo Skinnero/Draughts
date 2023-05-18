@@ -27,7 +27,6 @@ public class Board {
     }
 
     public List<Pawn> isLegalMove(Pawn pawn, int[] designedCoordinates) {
-        // TODO: (KACPER) CHECK EDGE CASES
         List<Pawn> attackedPawns = new ArrayList<>();
         int vectorX = designedCoordinates[0] - pawn.getCoordinates()[0];
         int vectorY = designedCoordinates[1] - pawn.getCoordinates()[1];
