@@ -13,11 +13,11 @@ public class Main {
 
         System.out.print("Enter first player name: ");
         String name = scanner.nextLine();
-        Player player_1 = new Player(1, name, 1, "\u001B[34m");
+        Player player_1 = new Player(1, name, boardSize * 2, "\u001B[34m");
 
         System.out.print("Enter second player name: ");
         name = scanner.nextLine();
-        Player player_2 = new Player(2, name, 1, "\u001B[31m");
+        Player player_2 = new Player(2, name, boardSize * 2, "\u001B[31m");
 
         Player playerInGame = player_1;
         board.fillBoardWithPawns(board, player_1, player_2);
